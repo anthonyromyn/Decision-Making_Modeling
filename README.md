@@ -2,7 +2,7 @@
 # 🧠 Statistical Modeling of Decision-Making & fMRI
 
 A quick repo for trial-level decision-making with fMRI BOLD signals.  
-The pipeline models choices with **hierarchical mixed-effects** and explores a **moderated-mediation** structure via **SEM**.  
+The pipeline models choices with **hierarchical mixed-effects** and explores a **moderated-mediation** structure via **structural-equation modeling (SEM)**.  
 This work includes a partially finished paper and accompanying R code, completed while I was a PhD student as an extension of my [masters thesis](https://utoronto.scholaris.ca/server/api/core/bitstreams/746812a9-6f1a-4932-a066-39af145a6d25/content).
 
 > 🎯 **Goal:** Explain how expected values (EVs) and prefrontal signals predict choice, with **NAcc** as a mediator and **vMPFC** as a moderator, accounting for participant/run nesting.
