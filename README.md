@@ -1,108 +1,34 @@
+# Statistical Modeling of Human Decision-Making
 
-# 🧠 Statistical Modeling of Decision-Making & fMRI
+**Hierarchical Regression · Behavioral Data · fMRI · Structural Equation Modeling · R**
 
-A quick repo for trial-level decision-making with fMRI BOLD signals.  
-The pipeline models choices with **hierarchical mixed-effects** and explores a **moderated-mediation** structure via **structural-equation modeling (SEM)**.  
-This work includes a partially finished paper and accompanying R code, completed while I was a PhD student as an extension of my [masters thesis](https://utoronto.scholaris.ca/server/api/core/bitstreams/746812a9-6f1a-4932-a066-39af145a6d25/content).
+## Overview
 
-> 🎯 **Goal:** Explain how expected values (EVs) and prefrontal signals predict choice, with **NAcc** as a mediator and **vMPFC** as a moderator, accounting for participant/run nesting.
+This project investigates how neural activity and expected values influence human decision-making, using statistical models of behavioral and fMRI data collected across repeated experimental trials.
 
----
+The analysis combines **generalized linear mixed-effects models (GLMMs), linear mixed-effects models (LMMs), and structural equation modeling (SEM)** to investigate relationships between decision-making, neural activity, and individual differences.
 
-## 🔍 TL;DR (what’s in here)
+The work originated during my computational neuroscience research at the University of Toronto and includes R analysis code and an accompanying research manuscript.
 
-- 🧪 **Behavior:** trial-level **`Decision`** from EVs + neural predictors (e.g., dlPFC / vMPFC), with participants (`ptp`) and runs (`Run`) as grouping factors.  
-- 🧩 **Mediator:** **`NAcc`** predicted from the same inputs.  
-- 🧱 **SEM layer:** **lavaan** tests (moderated) mediation using centered variables and interaction terms.  
-- 📄 **Paper:** the PDF documents the design and rationale.
+## Statistical and Technical Highlights
 
----
+- **Hierarchical modeling:** Used mixed-effects regression with participant- and run-level grouping structures to account for repeated observations.
+- **Binary outcome modeling:** Applied logistic mixed-effects regression to trial-level decisions.
+- **Interaction effects:** Investigated how relationships between expected value, neural activity, and decisions varied with individual differences.
+- **Mediation and moderation:** Used structural equation modeling to examine candidate indirect pathways and conditional effects.
+- **Statistical inference:** Used bootstrap-based inference for modeled indirect effects and visualized fitted relationships.
 
-## 🔑 Central finding
+## Research Question
 
-- ❤️‍🩹 **Prosocial choice via upregulating “Other,” not downregulating “Self.”**  
-  Patterns in the models were **more consistent with increased sensitivity to the *other* person’s expected value** (and its impact along the dlPFC → NAcc → Decision pathway) **than with simply suppressing self-related value**. Put simply: when *Other EV* was high, neural signals and choice tipped toward **taking** in ways that suggested an *upshift* of other-oriented value processing.
+How do neural signals representing the expected value of outcomes for oneself and others relate to decisions, and how might these relationships depend on individual differences in neural responses?
 
-> This interpretation comes from the trial-level mixed-effects, the NAcc mediator model, and SEM-based (moderated) indirect effects with vMPFC as a moderator.
+The analysis examines candidate pathways involving the dorsolateral prefrontal cortex (dlPFC), nucleus accumbens (NAcc), and ventromedial prefrontal cortex (vmPFC).
 
----
+The models investigate statistical associations and proposed mechanisms; they do not independently establish causal relationships.
 
-## 🧪 Why this was notable at the time (methods)
+## Repository Contents
 
-- 🧱 **Single-trial beta estimation (“beta-series”)**  
-  Trial-wise ROI estimates enabled **within-person** analyses of how neural variability tracked EVs and choices—still rarer then than subject-level GLMs averaged over events.
+- `analysis.R` — R code for mixed-effects regression, visualization, and structural equation modeling.
+- `write_up.pdf` — Accompanying research manuscript and interpretation.
 
-- 🧬 **Mixed-effects modeling of fMRI at the trial level**  
-  Instead of relying solely on a subject-level GLM → group second level, the pipeline used **GLMM/LMM** with **random slopes** for EV and neural terms, explicitly modeling **trials nested in participant/run**.
-
-- 🔀 **Orthogonalization of EV regressors (Self vs Other)**  
-  The *self* and *other* expected value signals were constructed to be **orthogonal**, reducing collinearity and helping isolate each component’s unique contribution to behavior and neural responses.
-
-- 🧩 **Moderated mediation across neural pathways**  
-  The analysis combined the mixed-effects backbone with **SEM** to probe **indirect effects (EV → NAcc → Decision)** **conditioned by vMPFC**, using centered variables and explicit interaction terms with bootstrap inference.
-
----
-
-## 🗺️ Quick Picture (conceptual)
-
-```mermaid
-flowchart LR
-  subgraph Participant_level
-    vMPFC["vMPFC (moderator)"]
-  end
-
-  subgraph Trial_level
-    EVs["selfEV & otherEV"]
-    dlPFC["dlPFC (trial signal)"]
-    NAcc["NAcc"]
-    Decision{"Decision"}
-  end
-
-  EVs --> dlPFC
-  EVs --> Decision
-  dlPFC --> NAcc --> Decision
-  vMPFC -. moderates .- dlPFC
-  vMPFC -. moderates .- NAcc
-```
-
-> ℹ️ **Interpretation:** EVs and dlPFC influence **NAcc**, which in turn influences **Decision**.  
-> vMPFC moderates key links (e.g., EVs×dlPFC → NAcc; NAcc → Decision in the SEM).  
-> Mixed effects handle repeated trials within participant/run.
-
----
-
-## 📂 Repository Contents
-
-```
-.
-├── analysis.R
-├── write_up.pdf
-└── README.md
-```
-
----
-
-## 🧭 Model Outline (informal)
-
-- **Behavioral model (GLMM, binomial)**  
-  `Decision ~ (selfEV + otherEV) × dlPFC_trial × (vMPFC_self + vMPFC_other) + (1 + slopes | ptp/Run)`
-
-- **Mediator model (LMM, gaussian)**  
-  `NAcc ~ (selfEV + otherEV) × dlPFC_trial × (vMPFC_self + vMPFC_other) + (1 + slopes | ptp/Run)`
-
-- **SEM (lavaan)**  
-  Moderated mediation with mean-centered main effects and **explicit product terms** (no latent variables).  
-  Bootstrap is used for inference on indirect effects.
-
----
-
-## 📝 Citing / Acknowledgements
-
-If you use this code or text, please cite the accompanying paper and this repository.  
-Authored by **Anthony Romyn** & **Dr. Wil Cunningham**.
-
----
-
-## 🗂 Data & Paths
-
-**Data are not included in the repo.**
+**Data availability:** The original research data are not included. Reproducing the analyses requires access to the underlying datasets and the necessary R package dependencies.
