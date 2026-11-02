@@ -18,7 +18,7 @@ This work includes a partially finished paper and accompanying R code, completed
 
 ---
 
-## 🔑 Central finding (plain English)
+## 🔑 Central finding
 
 - ❤️‍🩹 **Prosocial choice via upregulating “Other,” not downregulating “Self.”**  
   Patterns in the models were **more consistent with increased sensitivity to the *other* person’s expected value** (and its impact along the dlPFC → NAcc → Decision pathway) **than with simply suppressing self-related value**. Put simply: when *Other EV* was high, neural signals and choice tipped toward **taking** in ways that suggested an *upshift* of other-oriented value processing.
